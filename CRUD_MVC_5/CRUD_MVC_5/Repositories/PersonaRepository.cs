@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 
 namespace CRUD_MVC_5.Repositories
@@ -24,7 +25,7 @@ namespace CRUD_MVC_5.Repositories
             return new SqlConnection(_stringConnection);
         }
 
-        public List<PersonaEntity> ListPersons()
+        public async Task<List<PersonaEntity>> ListPersons()
         {
             List<PersonaEntity> personas = new List<PersonaEntity>();
             PersonaEntity persona = null;
@@ -37,7 +38,7 @@ namespace CRUD_MVC_5.Repositories
                 sqlCommand = sqlConnection.CreateCommand();
                 sqlCommand.CommandText = "dbo.sp_listar_personas";
                 sqlCommand.CommandType = CommandType.StoredProcedure;
-                sqlDataReader = sqlCommand.ExecuteReader();
+                sqlDataReader = await sqlCommand.ExecuteReaderAsync();
 
                 while (sqlDataReader.Read())
                 {

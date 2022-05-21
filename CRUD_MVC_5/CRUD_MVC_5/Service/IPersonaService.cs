@@ -9,6 +9,6 @@ namespace CRUD_MVC_5.Service
 {
     public interface IPersonaService
     {
-        List<PersonaEntity> ListPersonService();
+        Task<List<PersonaEntity>> ListPersonService();
     }
 }

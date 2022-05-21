@@ -1,6 +1,7 @@
 ﻿using CRUD_MVC_5.Models.Entities;
 using CRUD_MVC_5.Repositories.Contracts;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace CRUD_MVC_5.Service
 {
@@ -13,9 +14,9 @@ namespace CRUD_MVC_5.Service
             _personaRepository = personaRepository;
         }
 
-        public List<PersonaEntity> ListPersonService()
+        public async Task<List<PersonaEntity>> ListPersonService()
         {
-            return _personaRepository.ListPersons();
+            return await _personaRepository.ListPersons();
         }
     }
 }

@@ -1,0 +1,53 @@
+﻿@model IList<CRUD_MVC_5.Models.Entities.PersonaEntity>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Listado Personas</h2>
+
+<hr />
+
+<button type = "button" class = "btn btn-success">Crear Nuevo</button>          
+
+<hr />
+
+<table class="table">
+    <tr>
+        <th>
+            Nombre
+        </th>
+        <th>
+            Apellido
+        </th>
+        <th>
+            Correo
+        </th>
+        <th>
+            Telefono
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FirtsName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Phone)
+        </td>
+        <td>
+            <button type = "button" class = "btn btn-warning btn-sm">Editar</button>
+            <button type = "button" class = "btn btn-danger btn-sm">Eliminar</button>
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using CRUD_MVC_5.Data;
 using System.Data;
 using CRUD_MVC_5.Repositories.Contracts;
@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using CRUD_MVC_5.Models.Entities;
 using System.Data.SqlClient;
+using System.Web;
 
 namespace CRUD_MVC_5.Repositories
 {
@@ -190,8 +191,7 @@ namespace CRUD_MVC_5.Repositories
             {
                 sqlCommand.Dispose();
                 sqlConnection.Close();
-                sqlConnection.Dispose();
-                
+                sqlConnection.Dispose();                
             }
             return Personas;
         }

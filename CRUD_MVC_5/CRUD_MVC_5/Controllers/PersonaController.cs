@@ -9,29 +9,27 @@ using System.Linq;
 using System.Text;
 using System.Web.Mvc;
 
-
 namespace CRUD_MVC_5.Controllers
 {
     public class PersonaController : Controller
     {
         private readonly IPersonaService _personaService;
+
         public PersonaController(IPersonaService personaService)
         {
             _personaService = personaService;
         }
-        //solo para traer cosas
+
         [HttpGet]
-        //resultado de la accion
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            List<PersonaEntity> personas = null;
+            List<PersonaEntity> personas = new List<PersonaEntity>();
             try
             {
-                personas = _personaService.ListPersonService();
+                personas = await _personaService.ListPersonService();
             }
             catch (SqlException exc)
             {
-
                 throw new Exception($"Se ha producido un error al listar las personas: {exc.Message}");
             }
             return View(personas);
@@ -130,6 +128,5 @@ namespace CRUD_MVC_5.Controllers
             }
             return RedirectToAction(nameof(Index));
         }
-
     }
 }

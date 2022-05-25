@@ -31,7 +31,6 @@ namespace CRUD_MVC_5.App_Start
      
         private static void InitializeContainer(Container container)
         {
-
             // For instance:
             // container.Register<IUserRepository, SqlUserRepository>(Lifestyle.Scoped);
             container.Register<IPersonaRepository, PersonaRepository>(Lifestyle.Scoped);

@@ -109,12 +109,14 @@ namespace CRUD_MVC_5.Repositories
                 sqlConnection.Dispose();
             }
         }
-        public bool DeletePerson(int id)
+        public bool DeletePerson(int? id)
         {
+            bool result=false;
             PersonaEntity persona = null;
             SqlConnection sqlConnection = connection();
             SqlCommand sqlCommand = null;
-            SqlDataReader sqlDataReader = null;
+            SqlTransaction sqlTransaction = null;
+            
             try
             {
                 sqlConnection.Open();
@@ -122,16 +124,26 @@ namespace CRUD_MVC_5.Repositories
                 persona = FindPerson(id);
                 if(persona == null)
                 {
-                    return false;
+                    return result;
                 }
+                sqlTransaction = sqlConnection.BeginTransaction();
                 sqlCommand.CommandText = "dbo.sp_eliminar_persona";
                 //typo de comando se llama enumerable de tipo procedimiento almacenado
                 sqlCommand.CommandType = CommandType.StoredProcedure;
+                sqlCommand.Transaction = sqlTransaction;
                 sqlCommand.Parameters.Clear();
                 sqlCommand.Parameters.Add("pId", SqlDbType.Int).Value = id;
-                //guarda lo que trae la consulta
-                sqlDataReader = sqlCommand.ExecuteReader();
-                return true;
+                sqlCommand.ExecuteNonQuery();
+                sqlTransaction.Commit();
+                result=true;
+            }
+            catch (Exception ex)
+            {
+                if (sqlTransaction != null)
+                {
+                    sqlTransaction.Rollback();
+                }
+                throw new Exception($"Se produjo un error al guardas los productos: {ex.Message}");
             }
             finally
             {
@@ -139,6 +151,7 @@ namespace CRUD_MVC_5.Repositories
                 sqlConnection.Close();
                 sqlConnection.Dispose();
             }
+            return result;
         }
         public List<PersonaEntity> ListPersons()
         {

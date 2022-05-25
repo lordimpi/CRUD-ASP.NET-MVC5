@@ -193,6 +193,7 @@
     <Content Include="Views\Persona\Index.cshtml" />
     <Content Include="Views\Persona\FindPerson.cshtml" />
     <Content Include="Views\Persona\Modify.cshtml" />
+    <Content Include="Views\Persona\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

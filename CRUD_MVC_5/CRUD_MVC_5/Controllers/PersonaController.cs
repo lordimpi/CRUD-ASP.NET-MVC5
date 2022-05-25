@@ -53,24 +53,6 @@ namespace CRUD_MVC_5.Controllers
             return View(persona);
         }
         [HttpGet]
-        //[Route("Persona/FindPerson/{id:int}")]
-        public ActionResult Hola(int id)
-        {
-            try
-            {
-                if (_personaService.DeletePersonService(id))
-                {
-
-                }
-            }
-            catch (SqlException exc)
-            {
-
-                throw new Exception($"Se ha producido un error al eliminar la persona: {exc.Message}");
-            }
-            return View();
-        }
-        [HttpGet]
         [Route("Persona/Modify/{id:int}")]
         public ActionResult Modify(int? id)
         {
@@ -121,5 +103,33 @@ namespace CRUD_MVC_5.Controllers
             }
             return View(model);
         }
+        [HttpGet]
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return HttpNotFound();
+            }
+            PersonaEntity Person = _personaService.FindPersonService(id);
+            if (Person == null)
+            {
+                return HttpNotFound();
+            }
+            return View(Person);
+        }
+        [HttpPost,ActionName("Delete")]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            try
+            {
+                _personaService.DeletePersonService(id);
+            }
+            catch (SqlException exc)
+            {
+                throw new Exception($"Se ha producido un error al eliminar la persona: {exc.Message}");
+            }
+            return RedirectToAction(nameof(Index));
+        }
+
     }
 }

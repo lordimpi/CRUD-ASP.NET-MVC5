@@ -11,7 +11,7 @@ namespace CRUD_MVC_5.Services
     {
         List<PersonaEntity> ListPersonService();
         PersonaEntity FindPersonService(int? id);
-        bool DeletePersonService(int id);
+        bool DeletePersonService(int? id);
         bool ModifyPersonService(int id, PersonaEntity person);
     }
 }

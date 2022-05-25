@@ -17,7 +17,7 @@ namespace CRUD_MVC_5.Services
             _personaRepository = personaRepository;
         }
 
-        public bool DeletePersonService(int id)
+        public bool DeletePersonService(int? id)
         {
             return _personaRepository.DeletePerson(id);
         }

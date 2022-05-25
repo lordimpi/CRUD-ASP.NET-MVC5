@@ -11,7 +11,7 @@ namespace CRUD_MVC_5.Repositories.Contracts
     {
         List<PersonaEntity> ListPersons();
         PersonaEntity FindPerson(int? id);
-        bool DeletePerson(int id);
+        bool DeletePerson(int? id);
         bool ModifyPerson(int id, PersonaEntity person);
     }
 }

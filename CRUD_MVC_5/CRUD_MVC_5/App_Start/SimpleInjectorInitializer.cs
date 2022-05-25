@@ -7,7 +7,7 @@ namespace CRUD_MVC_5.App_Start
     using CRUD_MVC_5.Data;
     using CRUD_MVC_5.Repositories;
     using CRUD_MVC_5.Repositories.Contracts;
-    using CRUD_MVC_5.Service;
+    using CRUD_MVC_5.Services;
     using SimpleInjector;
     using SimpleInjector.Integration.Web;
     using SimpleInjector.Integration.Web.Mvc;

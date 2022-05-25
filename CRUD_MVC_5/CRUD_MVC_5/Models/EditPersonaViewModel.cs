@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Web;
 
-namespace CRUD_MVC_5.Models.Entities
+namespace CRUD_MVC_5.Models
 {
-    public class PersonaEntity
+    public class EditPersonaViewModel
     {
         public int Id { get; set; }
 
@@ -25,7 +24,7 @@ namespace CRUD_MVC_5.Models.Entities
         [Display(Name = "Correo")]
         [MaxLength(50, ErrorMessage = "El campo {0} debe tener un maximo de {1} caracéres.")]
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
-        [EmailAddress(ErrorMessage ="El campo {0} no es valido.")]
+        [EmailAddress(ErrorMessage = "El campo {0} no es valido.")]
         public string Email { get; set; }
 
         [Display(Name = "Telefono")]

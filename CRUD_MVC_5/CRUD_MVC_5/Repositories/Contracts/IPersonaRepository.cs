@@ -10,5 +10,8 @@ namespace CRUD_MVC_5.Repositories.Contracts
     public interface IPersonaRepository
     {
         List<PersonaEntity> ListPersons();
+        PersonaEntity FindPerson(int? id);
+        bool DeletePerson(int id);
+        bool ModifyPerson(int id, PersonaEntity person);
     }
 }

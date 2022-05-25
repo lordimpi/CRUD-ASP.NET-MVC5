@@ -10,5 +10,8 @@ namespace CRUD_MVC_5.Services
     public interface IPersonaService
     {
         List<PersonaEntity> ListPersonService();
+        PersonaEntity FindPersonService(int? id);
+        bool DeletePersonService(int id);
+        bool ModifyPersonService(int id, PersonaEntity person);
     }
 }

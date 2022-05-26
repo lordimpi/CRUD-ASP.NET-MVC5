@@ -1,4 +1,5 @@
-﻿using CRUD_MVC_5.Models.Entities;
+﻿using CRUD_MVC_5.Models;
+using CRUD_MVC_5.Models.Entities;
 using CRUD_MVC_5.services;
 using System;
 using System.Collections.Generic;
@@ -32,52 +33,31 @@ namespace CRUD_MVC_5.Controllers
             return View(personas);
         }
         [HttpGet]
-        [Route("Persona/Create/{persona:PersonaEntity}")]
-        public ActionResult Create(PersonaEntity persona)
+        public ActionResult Create()
         {
-
-            if (persona == null)
-            {
-                return HttpNotFound();
-            }
-            bool bandera = _personaService.CreatePersonService(persona);
-            if (!bandera)
-            {
-                return HttpNotFound();
-            }
-            EditPersonaViewModel model = new EditPersonaViewModel
-            {
-                Id = Person.Id,
-                Name = Person.Name,
-                FirtsName = Person.FirtsName,
-                Email = Person.Email,
-                Phone = Person.Phone
-            };
-            return View(model);
+            return View();
         }
         [HttpPost]
-        public ActionResult Create(EditPersonaViewModel model, int? id)
+        public ActionResult Create(EditPersonaViewModel model)
         {
-            if (id == null)
-            {
-                return HttpNotFound();
-            }
             if (ModelState.IsValid)
             {
                 try
                 {
-                    PersonaEntity Person = _personaService.FindPersonService(model.Id);
-                    Person.Name = model.Name;
-                    Person.FirtsName = model.FirtsName;
-                    Person.Email = model.Email;
-                    Person.Phone = model.Phone;
-                    _personaService.ModifyPersonService(model.Id, Person);
+                    PersonaEntity persona = new PersonaEntity
+                    {
+                        Name = model.Name,
+                        Email = model.Email,
+                        FirtsName = model.FirtsName,
+                        Phone = model.Phone
+                    };
+                    _personaService.CreatePersonService(persona);
                     return RedirectToAction(nameof(Index));
                 }
                 catch (SqlException exc)
                 {
 
-                    throw new Exception($"Se ha producido un error al modificar la persona: {exc.Message}");
+                    throw new Exception($"Se ha producido un error al crear la persona: {exc.Message}");
                 }
             }
             return View(model);

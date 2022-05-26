@@ -1,0 +1,29 @@
+﻿@model CRUD_MVC_5.Models.Entities.PersonaEntity
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.Name)
+        @Html.ValidationMessageFor(model => model.Name)
+    </div>
+    @Html.LabelFor(model => model.FirtsName, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.FirtsName)
+        @Html.ValidationMessageFor(model => model.FirtsName)
+    </div>
+    @Html.LabelFor(model => model.Email, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.Email)
+        @Html.ValidationMessageFor(model => model.Email)
+    </div>
+    @Html.LabelFor(model => model.Phone, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.Phone)
+        @Html.ValidationMessageFor(model => model.Phone)
+    </div>
+    <button type="button" class="btn btn-success">Crear Nuevo</button>
+</div>

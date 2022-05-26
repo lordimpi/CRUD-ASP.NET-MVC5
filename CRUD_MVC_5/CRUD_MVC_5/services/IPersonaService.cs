@@ -10,5 +10,6 @@ namespace CRUD_MVC_5.services
     public interface IPersonaService
     {
         List<PersonaEntity> ListPersonService();
+        PersonaEntity CreatePersonService();
     }
 }

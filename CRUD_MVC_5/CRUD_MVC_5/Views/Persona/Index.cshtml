@@ -8,7 +8,19 @@
 
 <hr />
 
-<button type = "button" class = "btn btn-success">Crear Nuevo</button>          
+<!--<button type = "button" asp-action="Create" class = "btn btn-success">Crear Nuevo</button>     -->
+<script>
+    function confirmacion() {
+        var pregunta = confirm("¿Deseas crear un nuevo elemento?")
+        if (pregunta) {
+            window.location.href = "Create.cshtml";
+        }
+        else {
+            alert("Quizás en otro momento... :)")
+        }
+    }
+</script>
+<button type="button" onclick="confirmacion()" class="btn btn-success">Crear Nuevo</button>
 
 <hr />
 
@@ -29,25 +41,26 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FirtsName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Phone)
-        </td>
-        <td>
-            <button type = "button" class = "btn btn-warning btn-sm">Editar</button>
-            <button type = "button" class = "btn btn-danger btn-sm">Eliminar</button>
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirtsName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Phone)
+            </td>
+            <td>
+                <button type="button" class="btn btn-warning btn-sm">Editar</button>
+                <button type="button" class="btn btn-danger btn-sm">Eliminar</button>
+            </td>
+        </tr>
+    }
 
 </table>

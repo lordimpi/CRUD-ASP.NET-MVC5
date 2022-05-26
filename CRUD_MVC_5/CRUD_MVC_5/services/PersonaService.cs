@@ -19,5 +19,9 @@ namespace CRUD_MVC_5.services
         {
             return _personaRepository.ListPerson();
         }
+        public PersonaEntity CreatePersonService()
+        {
+            return _personaRepository.CreatePerson();
+        }
     }
 }

@@ -57,5 +57,28 @@ namespace CRUD_MVC_5.Repositories
             }
             return personas;
         }
+
+        public PersonaEntity CreatePerson()
+        {
+            PersonaEntity persona = null;
+            SqlConnection sqlConnection = Connection();
+            SqlCommand sqlCommand = null;
+            SqlDataReader sqlDataReader = null;
+            try
+            {
+                sqlConnection.Open();
+                sqlCommand = sqlConnection.CreateCommand();
+                sqlCommand.CommandText = "dbo.sp_registrar_persona";
+                sqlCommand.CommandType = CommandType.StoredProcedure;
+                sqlDataReader = sqlCommand.ExecuteReader();
+            }
+            finally
+            {
+                sqlCommand.Dispose();
+                sqlConnection.Close();
+                sqlConnection.Dispose();
+            }
+            return persona;
+        }
     }
 }

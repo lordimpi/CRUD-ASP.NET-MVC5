@@ -10,6 +10,6 @@ namespace CRUD_MVC_5.Repositories.Contracts
     public interface IPersonaRepository
     {
         List<PersonaEntity> ListPerson();
-        PersonaEntity CreatePerson();
+        bool CreatePerson(PersonaEntity persona);
     }
 }

@@ -26,11 +26,5 @@ namespace CRUD_MVC_5.Controllers
 
             return View();
         }
-        public ActionResult Create()
-        {
-            ViewBag.Message = "Your create page.";
-
-            return View();
-        }
     }
 }

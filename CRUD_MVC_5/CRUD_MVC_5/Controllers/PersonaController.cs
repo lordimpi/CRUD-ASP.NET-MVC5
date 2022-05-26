@@ -32,41 +32,55 @@ namespace CRUD_MVC_5.Controllers
             return View(personas);
         }
         [HttpGet]
-        public ActionResult Create()
+        [Route("Persona/Create/{persona:PersonaEntity}")]
+        public ActionResult Create(PersonaEntity persona)
         {
-            PersonaEntity persona = new PersonaEntity();
-            //capturar datos
-            return View(persona);
-        }
 
+            if (persona == null)
+            {
+                return HttpNotFound();
+            }
+            bool bandera = _personaService.CreatePersonService(persona);
+            if (!bandera)
+            {
+                return HttpNotFound();
+            }
+            EditPersonaViewModel model = new EditPersonaViewModel
+            {
+                Id = Person.Id,
+                Name = Person.Name,
+                FirtsName = Person.FirtsName,
+                Email = Person.Email,
+                Phone = Person.Phone
+            };
+            return View(model);
+        }
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Nombre, Apellido, Correo, Teléfono")] PersonaEntity persona)
+        public ActionResult Create(EditPersonaViewModel model, int? id)
         {
-            //try
-            //{
-            //    if (ModelState.IsValid)
-            //    {
-            //        cadenaEstevan.Students.Add(persona);
-            //        cadenaEstevan.SaveChanges();
-            //        return RedirectToAction("Index");
-            //    }
-            //}
-            //catch (DataException /* dex */)
-            //{
-            //    //Log the error (uncomment dex variable name and add a line here to write a log.
-            //    ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
-            //}
-            //return View(persona);
-            try
+            if (id == null)
             {
-                persona = _personaService.CreatePersonService();
+                return HttpNotFound();
             }
-            catch (SqlException exc)
+            if (ModelState.IsValid)
             {
-                throw new Exception($"Se ha producido un error al crear la personas: {exc.Message}");
+                try
+                {
+                    PersonaEntity Person = _personaService.FindPersonService(model.Id);
+                    Person.Name = model.Name;
+                    Person.FirtsName = model.FirtsName;
+                    Person.Email = model.Email;
+                    Person.Phone = model.Phone;
+                    _personaService.ModifyPersonService(model.Id, Person);
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (SqlException exc)
+                {
+
+                    throw new Exception($"Se ha producido un error al modificar la persona: {exc.Message}");
+                }
             }
-            return View(persona);
+            return View(model);
         }
     }
 }

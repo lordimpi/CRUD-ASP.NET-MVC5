@@ -1,21 +1,18 @@
-using System;
 using CRUD_MVC_5.Data;
-using System.Data;
-using CRUD_MVC_5.Repositories.Contracts;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
 using CRUD_MVC_5.Models.Entities;
+using CRUD_MVC_5.Repositories.Contracts;
+using System;
+using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
-using System.Web;
+using System.Threading.Tasks;
 
 namespace CRUD_MVC_5.Repositories
 {
     public class PersonaRepository : IPersonaRepository
     {
         private readonly string _stringConnection;
-        
+
         public PersonaRepository(DataAccess dataAccess)
         {
             _stringConnection = dataAccess.ConnectionStringSQL;
@@ -25,10 +22,10 @@ namespace CRUD_MVC_5.Repositories
         {
             return new SqlConnection(_stringConnection);
         }
-        
+
         public bool CreatePerson(PersonaEntity person)
         {
-            SqlConnection sqlConnection = Connection();
+            SqlConnection sqlConnection = connection();
             SqlCommand sqlCommand = null;
             SqlTransaction sqlTransaction = null;
             bool result = false;
@@ -67,7 +64,7 @@ namespace CRUD_MVC_5.Repositories
             }
             return result;
         }
-        
+
         public PersonaEntity FindPerson(int? id)
         {
             PersonaEntity persona = null;
@@ -83,7 +80,7 @@ namespace CRUD_MVC_5.Repositories
                 //typo de comando se llama enumerable de tipo procedimiento almacenado
                 sqlCommand.CommandType = CommandType.StoredProcedure;
                 sqlCommand.Parameters.Clear();
-                sqlCommand.Parameters.Add("pId",SqlDbType.Int).Value=id; 
+                sqlCommand.Parameters.Add("pId", SqlDbType.Int).Value = id;
                 //guarda lo que trae la consulta
                 sqlDataReader = sqlCommand.ExecuteReader();
                 //lee cada columna hasta el final
@@ -156,18 +153,18 @@ namespace CRUD_MVC_5.Repositories
         }
         public bool DeletePerson(int? id)
         {
-            bool result=false;
+            bool result = false;
             PersonaEntity persona = null;
             SqlConnection sqlConnection = connection();
             SqlCommand sqlCommand = null;
             SqlTransaction sqlTransaction = null;
-            
+
             try
             {
                 sqlConnection.Open();
                 sqlCommand = sqlConnection.CreateCommand();
                 persona = FindPerson(id);
-                if(persona == null)
+                if (persona == null)
                 {
                     return result;
                 }
@@ -180,7 +177,7 @@ namespace CRUD_MVC_5.Repositories
                 sqlCommand.Parameters.Add("pId", SqlDbType.Int).Value = id;
                 sqlCommand.ExecuteNonQuery();
                 sqlTransaction.Commit();
-                result=true;
+                result = true;
             }
             catch (Exception ex)
             {
@@ -198,8 +195,7 @@ namespace CRUD_MVC_5.Repositories
             }
             return result;
         }
-
-        public List<PersonaEntity> ListPersons()
+        public async Task<List<PersonaEntity>> ListPersons()
         {
             List<PersonaEntity> Personas = new List<PersonaEntity>();
             PersonaEntity persona = null;
@@ -217,7 +213,7 @@ namespace CRUD_MVC_5.Repositories
                 //typo de comando se llama enumerable de tipo procedimiento almacenado
                 sqlCommand.CommandType = CommandType.StoredProcedure;
                 //guarda lo que trae la consulta
-                sqlDataReader = sqlCommand.ExecuteReader();
+                sqlDataReader = await sqlCommand.ExecuteReaderAsync();
                 //lee cada columna hasta el final
                 while (sqlDataReader.Read())
                 {
@@ -236,7 +232,7 @@ namespace CRUD_MVC_5.Repositories
             {
                 sqlCommand.Dispose();
                 sqlConnection.Close();
-                sqlConnection.Dispose();                
+                sqlConnection.Dispose();
             }
             return Personas;
         }

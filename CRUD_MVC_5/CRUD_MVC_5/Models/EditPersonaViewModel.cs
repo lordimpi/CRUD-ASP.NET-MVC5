@@ -28,8 +28,9 @@ namespace CRUD_MVC_5.Models
         public string Email { get; set; }
 
         [Display(Name = "Telefono")]
-        [Phone(ErrorMessage = "El campo {0} debe ser numérico")]
-        [Required(ErrorMessage = "El campo {0} es obligatorio")]
+        [Phone(ErrorMessage = "El campo {0} debe ser numérico.")]
+        [RegularExpression(@"^\d{10}$", ErrorMessage = "La cantidad debe ser de 10 dígitos.")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public string Phone { get; set; }
     }
 }

@@ -1,11 +1,9 @@
 ﻿using CRUD_MVC_5.Models.Entities;
 using CRUD_MVC_5.Repositories.Contracts;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using System.Threading.Tasks;
 
-namespace CRUD_MVC_5.services
+namespace CRUD_MVC_5.Services
 {
     public class PersonaService : IPersonaService
     {
@@ -15,13 +13,30 @@ namespace CRUD_MVC_5.services
         {
             _personaRepository = personaRepository;
         }
-        public List<PersonaEntity> ListPersonService()
-        {
-            return _personaRepository.ListPerson();
-        }
+
         public bool CreatePersonService(PersonaEntity persona)
         {
             return _personaRepository.CreatePerson(persona);
+        }
+
+        public async Task<List<PersonaEntity>> ListPersonService()
+        {
+            return await _personaRepository.ListPersons();
+        }
+
+        public PersonaEntity FindPersonService(int? id)
+        {
+            return _personaRepository.FindPerson(id);
+        }
+
+        public bool DeletePersonService(int? id)
+        {
+            return _personaRepository.DeletePerson(id);
+        }
+
+        public bool ModifyPersonService(int id, PersonaEntity person)
+        {
+            return _personaRepository.ModifyPerson(id, person);
         }
     }
 }

@@ -26,6 +26,7 @@ namespace CRUD_MVC_5.Controllers
             List<PersonaEntity> personas = new List<PersonaEntity>();
             try
             {
+
                 personas = await _personaService.ListPersonService();
             }
             catch (SqlException exc)
@@ -34,7 +35,38 @@ namespace CRUD_MVC_5.Controllers
             }
             return View(personas);
         }
+        
         [HttpGet]
+        public ActionResult Create()
+        {
+            return View();
+        }
+        
+        [HttpPost]
+        public ActionResult Create(EditPersonaViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    PersonaEntity persona = new PersonaEntity
+                    {
+                        Name = model.Name,
+                        Email = model.Email,
+                        FirtsName = model.FirtsName,
+                        Phone = model.Phone
+                    };
+                    _personaService.CreatePersonService(persona);
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (SqlException exc)
+                {
+                    throw new Exception($"Se ha producido un error al crear la persona: {exc.Message}");
+                }
+             }
+             return View(model);
+        }
+        
         //[Route("Persona/FindPerson/{id:int}")]
         public ActionResult FindPerson(int? id)
         {
@@ -95,12 +127,12 @@ namespace CRUD_MVC_5.Controllers
                 }
                 catch (SqlException exc)
                 {
-
                     throw new Exception($"Se ha producido un error al modificar la persona: {exc.Message}");
                 }
             }
             return View(model);
         }
+
         [HttpGet]
         public ActionResult Delete(int? id)
         {
